@@ -63,6 +63,10 @@ public class EmpresaService {
         }
 
         // 4Forma: usando stream
+        // idImpositivo.chars().filter(caracter -> condicion) te devuelve aqeullos que
+        // cumplan la condicion
+        // !Character.isDigit(c) : significa que NO sea un digito
+        // con el count() nos devuelve la cantidad de items.
         if (idImpositivo.chars().filter(c -> !Character.isDigit(c)).count() > 0)
             return EmpresaValidacionEnum.ID_IMPOSITIVO_INVALIDO;
 
@@ -72,7 +76,7 @@ public class EmpresaService {
         if (emp.getNombre().length() > 100)
             return EmpresaValidacionEnum.NOMBRE_INVALIDO;
 
-        //Si llego hassta aqui, es que todo lo de arriba, era valido
+        // Si llego hassta aqui, es que todo lo de arriba, era valido
         return EmpresaValidacionEnum.OK;
     }
 
@@ -80,5 +84,11 @@ public class EmpresaService {
         OK, // Cuando esta todo validado ok
         NOMBRE_INVALIDO, // Nombre tenga algun problema
         ID_IMPOSITIVO_INVALIDO // ID impositivo tenga un problema
+    }
+
+    public Empresa buscarEmpresaPorId(Integer empresaId) {
+        // en este caso para reusar el findById que no devuelva optional
+        // tenemos qeu castear el Integer a int
+        return empresaRepository.findById((int) empresaId);
     }
 }

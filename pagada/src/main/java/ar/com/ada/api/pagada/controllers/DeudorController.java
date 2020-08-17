@@ -11,6 +11,8 @@ import ar.com.ada.api.pagada.entities.Deudor;
 import ar.com.ada.api.pagada.models.request.DeudorRequest;
 import ar.com.ada.api.pagada.models.response.GenericResponse;
 import ar.com.ada.api.pagada.services.DeudorService;
+import ar.com.ada.api.pagada.services.DeudorService.DeudorValidacionEnum;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -30,7 +32,15 @@ public class DeudorController {
     public ResponseEntity<GenericResponse> crearDeudor(@RequestBody DeudorRequest dr) {
         GenericResponse gr = new GenericResponse();
 
-        //
+        DeudorValidacionEnum resultadoValidacion = deudorService.validarDeudorInfo(dr.paisId, dr.tipoIdImpositivo,
+                dr.idImpositivo, dr.nombre);
+        if (resultadoValidacion != DeudorValidacionEnum.OK) {
+            gr.isOk = false;
+            gr.message = "No se pudo validar el deudor " + resultadoValidacion.toString();
+
+            return ResponseEntity.badRequest().body(gr);
+        }
+        
         Deudor deudor = deudorService.crearDeudor(dr.paisId, dr.tipoIdImpositivo, dr.idImpositivo, dr.nombre);
 
         if (deudor != null) {

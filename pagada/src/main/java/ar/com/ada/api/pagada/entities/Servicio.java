@@ -26,6 +26,8 @@ public class Servicio {
     private TipoServicio tipoServicio;
     @Column(name = "tipo_comprobante_id")
     private TipoComprobanteEnum tipoComprobante;
+    private String numero;
+    private String moneda;
     @Column(name = "fecha_emision")
     private Date fechaEmision;
     @Column(name = "fecha_vencimiento")
@@ -138,6 +140,22 @@ public class Servicio {
     public void setPago(Pago pago) {
         this.pago = pago; // le pongo el pago al servicio
         pago.setServicio(this); // Le pongo el servicio al pago
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getMoneda() {
+        return moneda;
+    }
+
+    public void setMoneda(String moneda) {
+        this.moneda = moneda;
     }
 
 }

@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ar.com.ada.api.pagada.entities.Pais.TipoIdImpositivoEnum;
 
 @Entity
@@ -23,6 +25,7 @@ public class Deudor {
     private String idImpositivo;
     private String nombre;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "deudor", cascade = CascadeType.ALL)
     private List<Servicio> serviciosASuNombre = new ArrayList<>();
 
